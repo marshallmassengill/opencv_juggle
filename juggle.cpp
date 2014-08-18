@@ -19,22 +19,34 @@ int V_MAX = 256;
 //Make a window for the HSV trackbars
 //Make a window for the position in the video with button for play/pause
 
-void on_HSV_trackbar( int position, void* ){
+void onHSVTrackbarSlide(int position, void*){
 	
 }
 
-void createTrackbarsWindow(){
+void createHSVTrackbarsWindow(){
 	string trackbarWindowName = "Adjust me!";
 	cv::namedWindow(trackbarWindowName,0);
 	
 	char TrackbarName[50];
 
-	cv::createTrackbar( "H_MIN", trackbarWindowName, &H_MIN, H_MAX, on_HSV_trackbar);
-	cv::createTrackbar( "H_MAX", trackbarWindowName, &H_MAX, H_MAX, on_HSV_trackbar);
-	cv::createTrackbar( "S_MIN", trackbarWindowName, &S_MIN, S_MAX, on_HSV_trackbar);
-	cv::createTrackbar( "S_MAX", trackbarWindowName, &S_MAX, S_MAX, on_HSV_trackbar);
-	cv::createTrackbar( "V_MIN", trackbarWindowName, &V_MIN, V_MAX, on_HSV_trackbar);
-	cv::createTrackbar( "V_MAX", trackbarWindowName, &V_MAX, V_MAX, on_HSV_trackbar);
+	cv::createTrackbar( "H_MIN", trackbarWindowName, &H_MIN, H_MAX, onHSVTrackbarSlide);
+	cv::createTrackbar( "H_MAX", trackbarWindowName, &H_MAX, H_MAX, onHSVTrackbarSlide);
+	cv::createTrackbar( "S_MIN", trackbarWindowName, &S_MIN, S_MAX, onHSVTrackbarSlide);
+	cv::createTrackbar( "S_MAX", trackbarWindowName, &S_MAX, S_MAX, onHSVTrackbarSlide);
+	cv::createTrackbar( "V_MIN", trackbarWindowName, &V_MIN, V_MAX, onHSVTrackbarSlide);
+	cv::createTrackbar( "V_MAX", trackbarWindowName, &V_MAX, V_MAX, onHSVTrackbarSlide);
+}
+
+void onPositionTrackbarSlide(int position, void*){
+	
+}
+
+void createPositionTrackbarWindow(){
+	
+}
+
+void manipulateImage(){
+	
 }
 
 
@@ -50,7 +62,7 @@ int main(int argc, char* argv[]){
 	}
 
 	//Creating the other windows
-	createTrackbarsWindow();
+	createHSVTrackbarsWindow();
 
   while(1){
 		//Declaring the local variables for the video loop
@@ -64,6 +76,14 @@ int main(int argc, char* argv[]){
     }
 				
 		//Where the image manipulation happens
+
+		//wait for 'esc' key press for 30 ms. If 'esc' key is pressed, break loop
+		if(cv::waitKey(30) == 27){
+			cout << "esc key is pressed by user" << endl; 
+			break; 
+    }
+
+
 
 				//cv::GaussianBlur( frame, out, Size(5,5), 3, 3);
 				cv::pyrDown(frame, temp);				
@@ -90,13 +110,6 @@ int main(int argc, char* argv[]){
 
         cv::imshow("output", out); //show the frame in "MyVideo" window
 
-				if(cv::waitKey(30) == 27) //wait for 'esc' key press for 30 ms. If 'esc' key is pressed, break loop
-       {
-                cout << "esc key is pressed by user" << endl; 
-                break; 
-       }
     }
-
     return 0;
-
 }
